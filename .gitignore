@@ -1,0 +1,25 @@
+# Eclipse
+.project
+.classpath
+.settings/
+.metadata/
+
+# VS Code
+.vscode/
+
+# Archivos compilados
+*.class
+bin/
+/target/       
+
+# Archivos temporales / sistema
+*.log
+*.tmp
+**/.DS_Store
+Thumbs.db
+*~
+*.swp
+
+# Gradle (si lo llegas a usar)
+.gradle/
+build/

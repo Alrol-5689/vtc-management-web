@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+  <!-- Config de desarrollo: borra y crea tablas -->
+  <persistence-unit name="vtcPU-dev" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <!-- Si no listamos <class> aquí, Hibernate escaneará el classpath -->
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <!-- CONEXIÓN MariaDB -->
+      <property name="jakarta.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
+      <!-- <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/vtcweb"/> -->
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://127.0.0.1:3306/vtcweb"/>
+      <property name="jakarta.persistence.jdbc.user" value="root"/>
+      <property name="jakarta.persistence.jdbc.password" value=""/>
+      <!-- HIBERNATE -->
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>
+      <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.highlight_sql" value="true"/>
+      <!-- (Opcional) Pool Hikari básico -->
+      <!-- <property name="hibernate.hikari.maximumPoolSize" value="5"/> -->
+    </properties>
+  </persistence-unit>
+
+  <!-- Config de producción: mantiene datos -->
+  <persistence-unit name="vtcPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <!-- Si no listamos <class> aquí, Hibernate escaneará el classpath -->
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <!-- CONEXIÓN MariaDB -->
+      <property name="jakarta.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/vtcweb"/>
+      <property name="jakarta.persistence.jdbc.user" value="root"/>
+      <property name="jakarta.persistence.jdbc.password" value=""/>
+      <!-- HIBERNATE -->
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.highlight_sql" value="true"/>
+      <!-- (Opcional) Pool Hikari básico -->
+      <!-- <property name="hibernate.hikari.maximumPoolSize" value="5"/> -->
+    </properties>
+  </persistence-unit>
+</persistence>
