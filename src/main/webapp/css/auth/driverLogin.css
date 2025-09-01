@@ -1,0 +1,144 @@
+:root{
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --text: #1d1f23;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-contrast: #ffffff;
+  --danger: #b00020;
+  --border: #e5e7eb;
+  --focus: #93c5fd;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  margin: 32px 0 8px;
+  font-weight: 600;
+}
+
+.errors {
+  background: #fde8e9;
+  border: 1px solid #f5c2c7;
+  color: var(--danger);
+  padding: 10px 14px;
+  border-radius: 8px;
+  width: min(420px, 90vw);
+}
+
+.errors ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.login-container {
+  width: min(420px, 90vw);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.06);
+  margin: 16px 0 40px;
+}
+
+.form-group {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0;
+}
+
+label {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  background: #fff;
+}
+
+input:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 4px rgba(147,197,253,.35);
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper .toggle {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px 8px;
+  font-size: 0.95rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  min-width: 110px;
+}
+
+.btn.primary {
+  background: var(--primary);
+  color: var(--primary-contrast);
+  border-color: var(--primary);
+}
+
+.btn:hover {
+  filter: brightness(0.98);
+}
+
+.btn.primary:hover {
+  filter: brightness(1.05);
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(147,197,253,.35);
+}
+
+.btn.link {
+  background: transparent;
+  border: 0;
+  color: var(--primary);
+  padding-left: 0;
+}
