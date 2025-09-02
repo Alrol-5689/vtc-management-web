@@ -18,6 +18,7 @@
       <!-- HIBERNATE -->
       <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>
       <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <!-- <property name="hibernate.hbm2ddl.auto" value="create-drop"/> -->
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/>
       <property name="hibernate.highlight_sql" value="true"/>
@@ -34,7 +35,8 @@
     <properties>
       <!-- CONEXIÓN MariaDB -->
       <property name="jakarta.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
-      <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/vtcweb"/>
+      <!-- <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/vtcweb"/> -->
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://127.0.0.1:3306/vtcweb"/>
       <property name="jakarta.persistence.jdbc.user" value="root"/>
       <property name="jakarta.persistence.jdbc.password" value=""/>
       <!-- HIBERNATE -->
