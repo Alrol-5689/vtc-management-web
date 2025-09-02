@@ -18,7 +18,7 @@ public class JpaUtil {
             synchronized (JpaUtil.class) {
                 result = emf;
                 if (result == null) {
-                    result = Persistence.createEntityManagerFactory("vtcPU");
+                    result = Persistence.createEntityManagerFactory("vtcPU-dev");
                     emf = result;
                 }
             }
@@ -28,6 +28,22 @@ public class JpaUtil {
 
     public static EntityManager getEntityManager() {
         return getEntityManagerFactory().createEntityManager();
+    }
+
+    public static void close() {
+        EntityManagerFactory local = emf;
+        if (local != null) {
+            synchronized (JpaUtil.class) {
+                local = emf; // re-lee dentro del lock
+                if (local != null) {
+                    try {
+                        if (local.isOpen()) local.close();
+                    } finally {
+                        emf = null; // MUY IMPORTANTE: permitir recreación en siguiente init
+                    }
+                }
+            }
+        }
     }
 }
 
