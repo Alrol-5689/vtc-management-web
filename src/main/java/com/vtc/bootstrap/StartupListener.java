@@ -18,19 +18,16 @@ public class StartupListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
-        log.info("Initializing EntityManagerFactory...");
-        // Crear el EMF al iniciar la app
-        EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
-
-        // (Opcional) Forzar toque temprano para que Hibernate dispare la generación de esquema ya.
-        // Algunos proveedores ya generan en createEntityManagerFactory(); por si acaso:
-        try (EntityManager em = emf.createEntityManager()) {
-            em.getMetamodel(); // “toca” el metamodelo
-            log.info("JPA Metamodel loaded. Schema generation should have run.");
-        } catch (Exception ignored) {
-            // Si hay error aquí, mejor dejar que el flujo normal lo revele con logs
-            log.error("Error initializing JPA", ignored);
+        try {
+            log.info("Initializing EntityManagerFactory...");
+            EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+            try (EntityManager em = emf.createEntityManager()) {
+                em.getMetamodel(); // fuerza carga del metamodelo
+            }
+            log.info("JPA ready. Schema generation should have run.");
+        } catch (Exception e) {
+            // Importante: NO relanzar para no tumbar el deploy
+            log.error("Failed to initialize JPA on startup. Will initialize lazily on first use.", e);
         }
     }
 
