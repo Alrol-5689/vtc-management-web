@@ -1,5 +1,7 @@
 package com.vtc.model.user;
 
+import com.vtc.validation.constraints.DniNie;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,13 +48,10 @@ public class Driver {
     @Column(name = "second_last_name", nullable = true, length = 80)
     private String secondLastName;
     
-    // DNI/NIE (solo formato; la letra de control real podría validarse en Service)
+    // DNI/NIE con validación de letra de control mediante constraint personalizada
     @NotBlank
     @Size(max = 20)
-    @Pattern(
-        regexp = "^(?:\\d{8}[A-HJ-NP-TV-Z]|[XYZ]\\d{7}[A-HJ-NP-TV-Z])$",
-        message = "National ID must be a valid DNI/NIE format"
-    )
+    @DniNie
     @Column(name = "national_id", nullable = false, unique = true, length = 20)
     private String nationalId;
     
