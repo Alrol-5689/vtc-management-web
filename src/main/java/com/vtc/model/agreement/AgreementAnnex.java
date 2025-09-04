@@ -26,7 +26,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "agreement_annex")
+@Table(
+    name = "agreement_annex",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"collective_agreement_id", "start_date"})})
 public class AgreementAnnex {
 
     //===>> FIELDS <<===//
@@ -64,7 +66,7 @@ public class AgreementAnnex {
 
     @Convert(converter = DurationToMinutesConverter.class)
     @Column(name = "full_time_weekly_hours")
-    private Duration fullTimeWeeklyHours;
+    private Duration fullTimeWeeklyHours; // --- Horas semanales de jornada completa
 
     @OneToMany(mappedBy = "annex", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AgreementBonus> bonuses; 

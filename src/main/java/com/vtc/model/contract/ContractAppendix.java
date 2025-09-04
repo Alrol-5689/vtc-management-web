@@ -29,19 +29,18 @@ import jakarta.persistence.UniqueConstraint;
 @Entity
 @Table(
     name = "contract_appendix", 
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"contract_id", "start_date"})}
-    )
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"contract_id", "start_date"})})
 public class ContractAppendix {
 
     //===>> FIELDS <<===//
 
     @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // en MariaDB ha de ser auto_increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     @Column(name = "id") 
     private Long id;
 
-    @ManyToOne(optional = false) //===>> No puede hacer anejo sin contrato
-    @JoinColumn(name = "contract_id", nullable = false) //===>> La FK se llama id_contrato ===>> No podrá ser null
+    @ManyToOne(optional = false) 
+    @JoinColumn(name = "contract_id", nullable = false) //===>> La FK se llama contract_id ===>> No podrá ser null
     private Contract contract;
 
     @Column(name = "start_date", nullable = false) //===>> La fecha de inicio no puede ser nula

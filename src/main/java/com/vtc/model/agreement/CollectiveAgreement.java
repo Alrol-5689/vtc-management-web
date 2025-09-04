@@ -23,10 +23,10 @@ public class CollectiveAgreement {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date", nullable = false, unique = true)
     private LocalDate startDate;
 
-    @Column(name = "end_date")
+    @Column(name = "end_date", unique = true)
     private LocalDate endDate;
 
     @Column(name = "notes")

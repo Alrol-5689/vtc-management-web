@@ -7,6 +7,7 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +33,10 @@ public class AgreementBonus {
     private BonusType type;
 
     @ManyToOne(optional = false) 
-    @JoinColumn(name = "annex_id", nullable = false) 
+    @JoinColumn(
+        name = "annex_id", 
+        nullable = false,
+        foreignKey= @ForeignKey(name="fk_bonus_annex")) 
     private AgreementAnnex annex; 
 
     @Column(name = "notes")
