@@ -9,6 +9,7 @@ import com.vtc.model.user.Driver;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "contract")
@@ -29,7 +31,10 @@ public class Contract {
     private Long id;
     
     @ManyToOne(optional = false) 
-    @JoinColumn(name = "driver_id", nullable = false)
+    @JoinColumn(
+        name = "driver_id", 
+        nullable = false,
+        foreignKey= @ForeignKey(name="fk_contract_driver"))
     private Driver driver; 
 
     @Column(name = "start_date", nullable = false)
@@ -39,8 +44,9 @@ public class Contract {
     private LocalDate endDate;
 
     @Column(name = "company_join_date")
-    private LocalDate companyJoinDate; // no cambia con el contrato si es con la misma empresa
+    private LocalDate companyJoinDate; 
 
+    @Size(max = 255)
     @Column(name = "company", nullable = false)
     private String company;
 

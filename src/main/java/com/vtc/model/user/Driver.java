@@ -1,6 +1,7 @@
 package com.vtc.model.user;
 
 import com.vtc.validation.constraints.DniNie;
+import com.vtc.validation.constraints.UniqueUsername;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +27,7 @@ public class Driver {
 
     @NotBlank
     @Size(max = 50)
-    // @UniqueUsername // Custom annotation for username uniqueness
+    @UniqueUsername // Hace una consulta y comprueba que no exista otro conductor con ese username
     @Column(name = "username", nullable = false, unique = true, length = 50)
     private String username;
 
@@ -34,6 +35,10 @@ public class Driver {
     @Size(max = 255)
     @Column(name = "password", nullable = false, length = 255)
     private String password;
+
+    @Size(max = 4)
+    @Column(name = "pin", nullable = true, length = 4)
+    private String pin;
 
     @NotBlank
     @Size(max = 80)
@@ -135,4 +140,12 @@ public class Driver {
 
     public List<Payslip> getPayslips() {return nominas;}
     public void setPayslips(List<Payslip> payslips) {this.payslips = payslips;}*/   
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
 }

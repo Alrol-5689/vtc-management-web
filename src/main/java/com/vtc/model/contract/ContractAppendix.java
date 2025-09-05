@@ -15,6 +15,7 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,7 +41,10 @@ public class ContractAppendix {
     private Long id;
 
     @ManyToOne(optional = false) 
-    @JoinColumn(name = "contract_id", nullable = false) //===>> La FK se llama contract_id ===>> No podrá ser null
+    @JoinColumn(
+        name = "contract_id", 
+        nullable = false,
+        foreignKey= @ForeignKey(name="fk_appendix_contract"))
     private Contract contract;
 
     @Column(name = "start_date", nullable = false) //===>> La fecha de inicio no puede ser nula
