@@ -89,68 +89,70 @@ public class ContractAppendix {
     public LocalDate getEndDate() {return endDate;}
     public Duration getAuxiliaryTasks() {return auxiliaryTasks;}
     public Double getAnnualSalary() {return annualSalary;}
+    public Map<DayOfWeek, Long> getWeeklySchedule() {return weeklySchedule;}
     public List<CommissionPolicy> getCommissionPolicies() {return commissionPolicies;}
     public List<BonusPolicy> getBonusPolicies() {return bonusPolicies;}
-    public Map<DayOfWeek, Long> getWeeklySchedule() {return weeklySchedule;}
 
     //===>> SETTERS <<===//
     
-    public void setEndDate(LocalDate fechaFin) {this.endDate = fechaFin;}
-    public void setCommissionPolicies(List<CommissionPolicy> politicaComision) {
-        this.commissionPolicies = politicaComision;
-    }
-    public void setBonusPolicies(List<BonusPolicy> politicaGratificacions) {
-        this.bonusPolicies = politicaGratificacions;
-    }
+    public void setId(Long id) {this.id = id;}
+    public void setContract(Contract contract) {this.contract = contract;}
+    public void setStartDate(LocalDate startDate) {this.startDate = startDate;}
+    public void setEndDate(LocalDate endDate) {this.endDate = endDate;}
+    public void setAuxiliaryTasks(Duration auxiliaryTasks) {this.auxiliaryTasks = auxiliaryTasks;}
+    public void setAnnualSalary(Double annualSalary) {this.annualSalary = annualSalary;}
+    public void setWeeklySchedule(Map<DayOfWeek, Long> weeklySchedule) {this.weeklySchedule = weeklySchedule;}
+    public void setCommissionPolicies(List<CommissionPolicy> commissionPolicies) {this.commissionPolicies = commissionPolicies;}
+    public void setBonusPolicies(List<BonusPolicy> bonusPolicies) {this.bonusPolicies = bonusPolicies;}
     
-    public void setContract(Contract contrato) {
-        if (this.contract != null) 
-            throw new UnsupportedOperationException(
-                "El contrato no se puede cambiar una vez asignado.");   
-        if (this.contract == null) this.contract = contrato;
-    }
+    // public void setContract(Contract contrato) {
+    //     if (this.contract != null) 
+    //         throw new UnsupportedOperationException(
+    //             "El contrato no se puede cambiar una vez asignado.");   
+    //     if (this.contract == null) this.contract = contrato;
+    // }
 
-    public void setStartDate(LocalDate startDate) {
-        if (this.startDate != null) throw new UnsupportedOperationException(
-                "La fecha de inicio no se puede cambiar una vez asignada.");
-        if (startDate == null) throw new IllegalArgumentException(
-                "La fecha de inicio no puede ser nula.");
-        if (this.contract == null) throw new IllegalStateException(
-                "Debe establecerse el contrato antes de la fecha de inicio.");
-        List<ContractAppendix> anejos = contract.getAppendix();
-        ContractAppendix anterior = anejos.stream()
-            .filter(a -> a.getContract().equals(this.contract))
-            .filter(a -> a.getEndDate() != null)
-            .filter(a -> a.getEndDate().isBefore(startDate))
-            .max((a1, a2) -> a1.getEndDate().compareTo(a2.getEndDate()))
-            .orElse(null);
-        if (anterior != null) {
-            LocalDate esperado = anterior.getEndDate().plusDays(1);
-            if (!startDate.equals(esperado)) throw new IllegalArgumentException(
-                    "La fecha de inicio debe ser el día siguiente a la fecha de fin del anejo anterior.");
-        }
-        this.startDate = startDate;
-    }
+    // public void setStartDate(LocalDate startDate) {
+    //     if (this.startDate != null) throw new UnsupportedOperationException(
+    //             "La fecha de inicio no se puede cambiar una vez asignada.");
+    //     if (startDate == null) throw new IllegalArgumentException(
+    //             "La fecha de inicio no puede ser nula.");
+    //     if (this.contract == null) throw new IllegalStateException(
+    //             "Debe establecerse el contrato antes de la fecha de inicio.");
+    //     List<ContractAppendix> anejos = contract.getAppendix();
+    //     ContractAppendix anterior = anejos.stream()
+    //         .filter(a -> a.getContract().equals(this.contract))
+    //         .filter(a -> a.getEndDate() != null)
+    //         .filter(a -> a.getEndDate().isBefore(startDate))
+    //         .max((a1, a2) -> a1.getEndDate().compareTo(a2.getEndDate()))
+    //         .orElse(null);
+    //     if (anterior != null) {
+    //         LocalDate esperado = anterior.getEndDate().plusDays(1);
+    //         if (!startDate.equals(esperado)) throw new IllegalArgumentException(
+    //                 "La fecha de inicio debe ser el día siguiente a la fecha de fin del anejo anterior.");
+    //     }
+    //     this.startDate = startDate;
+    // }
 
-    public void setFechaInicio_forzarAnterior(LocalDate nuevaFechaInicio) {
-        if (this.startDate != null) throw new UnsupportedOperationException(
-                "La fecha de inicio no se puede cambiar una vez asignada.");
-        if (nuevaFechaInicio == null) throw new IllegalArgumentException(
-                "La fecha de inicio no puede ser nula.");
-        if (this.contract == null) throw new IllegalStateException(
-                "Debe establecerse el contrato antes de la fecha de inicio.");
-        List<ContractAppendix> anejos = contract.getAppendix();
-        ContractAppendix anterior = anejos.stream()
-            .filter(a -> a.getContract().equals(this.contract))
-            .filter(a -> a.getStartDate().isBefore(nuevaFechaInicio))
-            .max((a1, a2) -> a1.getStartDate().compareTo(a2.getStartDate()))
-            .orElse(null);
-        if (anterior != null) {
-            LocalDate fechaFinEsperada = startDate.minusDays(1);
-            if (anterior.getEndDate() == null || !anterior.getEndDate().equals(fechaFinEsperada)) 
-                anterior.setEndDate(fechaFinEsperada);
-        }
-        this.startDate = nuevaFechaInicio;
-    }
+    // public void setFechaInicio_forzarAnterior(LocalDate nuevaFechaInicio) {
+    //     if (this.startDate != null) throw new UnsupportedOperationException(
+    //             "La fecha de inicio no se puede cambiar una vez asignada.");
+    //     if (nuevaFechaInicio == null) throw new IllegalArgumentException(
+    //             "La fecha de inicio no puede ser nula.");
+    //     if (this.contract == null) throw new IllegalStateException(
+    //             "Debe establecerse el contrato antes de la fecha de inicio.");
+    //     List<ContractAppendix> anejos = contract.getAppendix();
+    //     ContractAppendix anterior = anejos.stream()
+    //         .filter(a -> a.getContract().equals(this.contract))
+    //         .filter(a -> a.getStartDate().isBefore(nuevaFechaInicio))
+    //         .max((a1, a2) -> a1.getStartDate().compareTo(a2.getStartDate()))
+    //         .orElse(null);
+    //     if (anterior != null) {
+    //         LocalDate fechaFinEsperada = startDate.minusDays(1);
+    //         if (anterior.getEndDate() == null || !anterior.getEndDate().equals(fechaFinEsperada)) 
+    //             anterior.setEndDate(fechaFinEsperada);
+    //     }
+    //     this.startDate = nuevaFechaInicio;
+    // }
 
 }
