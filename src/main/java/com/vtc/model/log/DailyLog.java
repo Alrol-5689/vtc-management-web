@@ -9,6 +9,7 @@ import com.vtc.util.DurationToMinutesConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,17 +17,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(
     name = "daily_log", 
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"fecha", "id_conductor"})
-    }
-)
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "driver_id"})})
 public class DailyLog {
 
-    //===>> ATRIBUTOS <<===//
+    //===>> FIELDS <<===//
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,11 +33,15 @@ public class DailyLog {
     private Long id; 
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_conductor")
+    @JoinColumn(
+        name = "driver_id", 
+        nullable = false,
+        foreignKey= @ForeignKey(name="fk_daily_log_driver"))
     private Driver driver;
 
-    @Column(name = "fecha", nullable = false)
-    private LocalDate fecha;
+    @NotBlank
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
 
     @Convert(converter = DurationToMinutesConverter.class)
     @Column(name = "jornada")   
@@ -66,7 +69,7 @@ public class DailyLog {
 
     //===>> Getters y setters
     public Long getId() {return id;}
-    public LocalDate getFecha() { return fecha; }
+    public LocalDate getDate() { return date; }
     public Duration getConexion() { return conexion; }
     public Duration getPresencia() { return presencia; }
     public Duration getTareasAux() { return tareasAux; }
