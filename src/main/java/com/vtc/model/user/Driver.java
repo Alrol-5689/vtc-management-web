@@ -1,13 +1,19 @@
 package com.vtc.model.user;
 
+import java.util.List;
+
+import com.vtc.model.contract.Contract;
+import com.vtc.model.log.DailyLog;
 import com.vtc.validation.constraints.DniNie;
 import com.vtc.validation.constraints.UniqueUsername;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -36,7 +42,7 @@ public class Driver {
     @Column(name = "password", nullable = false, length = 255)
     private String password;
 
-    @Size(max = 4)
+    @Size(max = 4) // El pin es opcional
     @Column(name = "pin", nullable = true, length = 4)
     private String pin;
 
@@ -62,10 +68,7 @@ public class Driver {
     
     @NotBlank
     @Size(max = 20)
-    @Pattern(
-        regexp = "^[0-9\\s+()-]{6,20}$",
-        message = "Phone format is invalid"
-    )
+    @Pattern(regexp = "^[0-9\\s+()-]{6,20}$", message = "Phone format is invalid")
     @Column(name = "phone", nullable = false, unique = true, length = 20)
     private String phone;
     
@@ -75,13 +78,13 @@ public class Driver {
     @Column(name = "email", nullable = false, unique = true, length = 120)
     private String email;
 
-    /*@OneToMany(mappedBy = "conductor", cascade = CascadeType.ALL, orphanRemoval = true) 
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true) 
     private List<Contract> contracts;
 
-    @OneToMany(mappedBy = "conductor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DailyLog> dailyLogs;
 
-    @OneToMany(mappedBy = "conductor", cascade = CascadeType.ALL, orphanRemoval = true)
+    /*@OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Payslip> payslips;*/
 
     //===>> CONSTRUCTORS <<===//
@@ -114,6 +117,9 @@ public class Driver {
     public String getPassword() { return password; }
     public void setPassword(String password) {this.password = password;}
 
+    public String getPin() {return pin;}
+    public void setPin(String pin) {this.pin = pin;}
+
     public String getFirstName() { return firstName;}
     public void setFirstName(String firstName) {this.firstName = firstName;}
 
@@ -132,20 +138,14 @@ public class Driver {
     public String getEmail() {return email;}
     public void setEmail(String email) {this.email = email;}
 
-    /*public List<Contract> getContracts() {return contracts;}
+    public List<Contract> getContracts() {return contracts;}
     public void setContracts(List<Contract> contracts) {this.contracts = contracts;}
 
     public List<DailyLog> getDailyLogs() {return dailyLogs;}
     public void setDailyLogs(List<DailyLog> dailyLogs) {this.dailyLogs = dailyLogs;}
 
-    public List<Payslip> getPayslips() {return nominas;}
+    /*public List<Payslip> getPayslips() {return nominas;}
     public void setPayslips(List<Payslip> payslips) {this.payslips = payslips;}*/   
 
-    public String getPin() {
-        return pin;
-    }
 
-    public void setPin(String pin) {
-        this.pin = pin;
-    }
 }
