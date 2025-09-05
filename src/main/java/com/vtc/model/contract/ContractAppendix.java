@@ -62,8 +62,11 @@ public class ContractAppendix {
 
     @ElementCollection
     @CollectionTable(
-        name = "appendix_weeklySchedule",
-        joinColumns = @JoinColumn(name = "appendix_id"))
+        name = "weeklySchedule",
+        joinColumns = @JoinColumn(
+            name = "appendix_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_weeklySchedule_appendix")))
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "day_of_week") // almacenado como texto o número
     @Column(name = "minutes")
