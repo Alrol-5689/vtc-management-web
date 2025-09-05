@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -22,7 +23,10 @@ public class BonusPolicy {
     private Long id;
 
     @ManyToOne(optional = false) 
-    @JoinColumn(name = "appendix_id", nullable = false) 
+    @JoinColumn(
+        name = "appendix_id", 
+        nullable = false,
+        foreignKey= @ForeignKey(name="fk_bonus_policy_appendix")) 
     private ContractAppendix appendix;
 
     @Column(name = "start_date", nullable = false)
@@ -42,32 +46,34 @@ public class BonusPolicy {
 
     //===>> CONSTRUCTORS <<===//
 
-    public BonusPolicy() {
-    }
+    public BonusPolicy() {}
 
     //===>> TO STRING <<===//
 
     @Override
     public String toString() {
-        return "Umbral: " + goal + " €, Comisión: " + bonus + "€";
+        return "[ Umbral: " + goal + " € ] [ Comisión: " + bonus + " € ] [ Inicio: " + startDate + 
+         " ] [ Fin: " + endDate + " ] [ Reconocida: " + realBonus + " ]";
     }
 
     //===>> GETTERS <<===//
 
-    public double getGoal() { return goal;}
-    public LocalDate getStartDate() { return startDate; }
-    public double getBonus() { return bonus; }
+    public Long getId() {return id;}
     public ContractAppendix getAppendix() {return appendix;}
+    public LocalDate getStartDate() {return startDate;}
+    public LocalDate getEndDate() {return endDate;}
+    public double getGoal() {return goal;}
+    public double getBonus() {return bonus; }
     public boolean isRealBonus() {return realBonus;}
-    public LocalDate getEndDate() { return endDate;}
     
     //===>> SETTERS <<===//
     
-    public void setGoal(double umbral) { this.goal = umbral; }
-    public void setRealBonus(boolean realCommission) {this.realBonus = realCommission;}
-    public void setBonus(double porcentaje) { this.bonus = porcentaje; }
-    public Long getId() {return id;}
     public void setId(Long idPoliticaGratificacion) {this.id = idPoliticaGratificacion;}
     public void setAppendix(ContractAppendix anejoContrato) {this.appendix = anejoContrato;}
+    public void setStartDate(LocalDate fechaInicio) {this.startDate = fechaInicio;}
+    public void setEndDate(LocalDate fechaFin) {this.endDate = fechaFin;}
+    public void setGoal(double umbral) {this.goal = umbral;}
+    public void setBonus(double porcentaje) {this.bonus = porcentaje;}
+    public void setRealBonus(boolean realCommission) {this.realBonus = realCommission;}
 
 }
