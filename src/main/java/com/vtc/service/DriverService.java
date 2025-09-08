@@ -1,10 +1,15 @@
 package com.vtc.service;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
 
 import com.vtc.model.user.Driver;
 import com.vtc.persistence.dao.DriverDao;
 import com.vtc.persistence.jpa.DriverDaoJpa;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 
 /**
  * Application service for Driver use-cases.
@@ -13,6 +18,8 @@ import com.vtc.persistence.jpa.DriverDaoJpa;
 public class DriverService {
 
     private final DriverDao driverDao;
+    private static final Validator VALIDATOR =
+            Validation.buildDefaultValidatorFactory().getValidator();
 
     /** Default constructor using JPA implementation. */
     public DriverService() {
@@ -27,7 +34,29 @@ public class DriverService {
     // ====== Commands ======
 
     public void createDriver(Driver driver) {
-        // TODO: add validations (email format, phone, nationalId) before persisting
+        if (driver == null) throw new IllegalArgumentException("Driver cannot be null");
+
+        List<String> errors = new ArrayList<>(3);
+
+        // Validate only targeted fields for speed
+        Set<ConstraintViolation<Driver>> emailViolations = VALIDATOR.validateProperty(driver, "email");
+        if (!emailViolations.isEmpty()) {
+            emailViolations.forEach(v -> errors.add("email: " + v.getMessage()));
+        }
+
+        Set<ConstraintViolation<Driver>> phoneViolations = VALIDATOR.validateProperty(driver, "phone");
+        if (!phoneViolations.isEmpty()) {
+            phoneViolations.forEach(v -> errors.add("phone: " + v.getMessage()));
+        }
+
+        Set<ConstraintViolation<Driver>> idViolations = VALIDATOR.validateProperty(driver, "nationalId");
+        if (!idViolations.isEmpty()) {
+            idViolations.forEach(v -> errors.add("nationalId: " + v.getMessage()));
+        }
+
+        if (!errors.isEmpty()) {
+            throw new IllegalArgumentException(String.join("; ", errors));
+        }
         driverDao.create(driver);
     }
 
