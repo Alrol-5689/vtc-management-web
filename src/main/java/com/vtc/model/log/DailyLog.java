@@ -16,8 +16,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(
@@ -39,56 +40,54 @@ public class DailyLog {
         foreignKey= @ForeignKey(name="fk_daily_log_driver"))
     private Driver driver;
 
-    @NotBlank
+    @NotNull
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
     @Convert(converter = DurationToMinutesConverter.class)
-    @Column(name = "jornada")   
-    private Duration jornada;
+    @Column(name = "connection")
+    private Duration connection;
 
     @Convert(converter = DurationToMinutesConverter.class)
-    @Column(name = "conexion")
-    private Duration conexion;
+    @Column(name = "presence")
+    private Duration presence;
 
     @Convert(converter = DurationToMinutesConverter.class)
-    @Column(name = "presencia")
-    private Duration presencia;
+    @Column(name = "auxiliary_tasks")
+    private Duration auxiliaryTasks;
 
-    @Convert(converter = DurationToMinutesConverter.class)
-    @Column(name = "tareas_aux")
-    private Duration tareasAux;
-
-    @Column(name = "facturacion")
-    private double facturacion;
+    @Column(name = "billing_amount")
+    private double billingAmount;
     
-    //===>> CONSTRUCTORES <<===//
+    //===>> CONSTRUCTORS <<===//
 
-    public DailyLog() {
-    }
+    public DailyLog() {}
+
+    //===>> TO STRING <<===//
 
     //===>> Getters y setters
+
     public Long getId() {return id;}
     public LocalDate getDate() { return date; }
-    public Duration getConexion() { return conexion; }
-    public Duration getPresencia() { return presencia; }
-    public Duration getTareasAux() { return tareasAux; }
-    public double getFacturacion() { return facturacion; }
+    public Duration getConnection() { return connection; }
+    public Duration getPresence() { return presence; }
+    public Duration getAuxiliaryTasks() { return auxiliaryTasks; }
+    public double getBillingAmount() { return billingAmount; }
     public Driver getDriver() { return driver; }
-    public Duration getBalance() { return conexion.plus(presencia).plus(tareasAux).minus(jornada); }
+    public Duration getBalance() { return getWorkingHours(); }
 
-    public void setJornada(Duration jornada) { this.jornada = jornada; }
-    public void setConexion(Duration conexion) { this.conexion = conexion; }
-    public void setPresencia(Duration presencia) { this.presencia = presencia; }
-    public void setTareasAux(Duration tareasAux) { this.tareasAux = tareasAux; }
-    public void setFacturacion(double facturacion) { this.facturacion = facturacion; }
+    public void setConnection(Duration connection) { this.connection = connection; }
+    public void setPresence(Duration presence) { this.presence = presence; }
+    public void setAuxiliaryTasks(Duration auxiliaryTasks) { this.auxiliaryTasks = auxiliaryTasks; }
+    public void setBillingAmount(double billingAmount) { this.billingAmount = billingAmount; }
+    
+    @Transient
+    public Duration getWorkingHours() {
+        return zeroIfNull(connection)
+                .plus(zeroIfNull(presence))
+                .plus(zeroIfNull(auxiliaryTasks));
+    }
 
-
-
-
-
-
-
-
+    private static Duration zeroIfNull(Duration d) { return d == null ? Duration.ZERO : d; }
 
 }
