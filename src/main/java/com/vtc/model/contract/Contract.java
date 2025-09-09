@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.vtc.model.user.Driver;
+import com.vtc.model.company.Company;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,8 +47,12 @@ public class Contract {
     private LocalDate companyJoinDate; 
 
     @Size(max = 255)
-    @Column(name = "company", nullable = false)
-    private String company;
+    @ManyToOne(optional = false)
+    @JoinColumn(
+        name = "company_id",
+        nullable = false,
+        foreignKey = @ForeignKey(name = "fk_contract_company"))
+    private Company company;
 
     @Column(name = "notes")
     private String notes; 
@@ -68,7 +73,7 @@ public class Contract {
     public LocalDate getStartDate() {return startDate;}
     public LocalDate getEndDate() {return endDate;}
     public LocalDate getCompanyJoinDate() {return companyJoinDate;}
-    public String getCompany() {return company;}
+    public Company getCompany() {return company;}
     public String getNotes() {return notes;}
     public List<ContractAppendix> getAppendix() {return appendix;}
     
@@ -79,7 +84,7 @@ public class Contract {
     public void setStartDate(LocalDate startDate) {this.startDate = startDate;}
     public void setEndDate(LocalDate endDate) {this.endDate = endDate;}
     public void setCompanyJoinDate(LocalDate companyJoinDate) {this.companyJoinDate = companyJoinDate;}
-    public void setCompany(String company) {this.company = company;}
+    public void setCompany(Company company) {this.company = company;}
     public void setNotes(String notes) {this.notes = notes;}
     public void setAppendix(List<ContractAppendix> appendix) {this.appendix = appendix;}
 
