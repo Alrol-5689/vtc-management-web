@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.vtc.model.user.Administrator;
 import com.vtc.util.DurationToMinutesConverter;
 
 import jakarta.persistence.CascadeType;
@@ -71,6 +72,13 @@ public class AgreementAnnex {
     @OneToMany(mappedBy = "annex", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AgreementBonus> bonuses; 
 
+    @ManyToOne(optional = false)
+    @JoinColumn(
+        name = "administrator_id",
+        nullable = false,
+        foreignKey= @ForeignKey(name="fk_annex_admin"))
+    private Administrator createdBy;
+
     @ElementCollection
     @CollectionTable(
         name = "annex_seniority_map", 
@@ -103,6 +111,7 @@ public class AgreementAnnex {
     public Duration getAuxiliaryTasks() {return auxiliaryTasks;}
     public List<AgreementBonus> getBonuses() {return bonuses;}
     public Map<Integer, Double> getSeniorityBreakpoints() {return seniorityBreakpoints;}
+    public Administrator getCreatedBy() { return createdBy; }
 
     //===>> SETTERS <<===//
 
@@ -117,5 +126,6 @@ public class AgreementAnnex {
     public void setFullTimeWeeklyHours(Duration jornadaCompleta) {this.fullTimeWeeklyHours = jornadaCompleta;}
     public void setBonuses(List<AgreementBonus> pluses) {this.bonuses = pluses;}
     public void setSeniorityBreakpoints(Map<Integer, Double> seniorityBreakpoints) {this.seniorityBreakpoints = seniorityBreakpoints;}
+    public void setCreatedBy(Administrator createdBy) { this.createdBy = createdBy; }
 
 }
