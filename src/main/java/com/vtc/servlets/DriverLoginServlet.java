@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.vtc.model.user.Driver;
 import com.vtc.service.DriverService;
+import com.vtc.service.CompanyService;
+import com.vtc.model.company.Company;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 public class DriverLoginServlet extends HttpServlet {
 
     private final DriverService service = new DriverService();
+    private final CompanyService companyService = new CompanyService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -74,6 +77,17 @@ public class DriverLoginServlet extends HttpServlet {
 
         // (Opcional) tiempo de inactividad antes de expirar (en segundos)
         session.setMaxInactiveInterval(30 * 60); // 30 minutos
+
+        // Populate companies for this driver and set active one by default
+        try {
+            java.util.List<Company> companies = companyService.findByDriverId(driver.getId());
+            session.setAttribute("companies", companies);
+            if (companies != null && !companies.isEmpty()) {
+                Company c = companies.get(0);
+                session.setAttribute("activeCompanyId", c.getId());
+                session.setAttribute("activeCompanyName", c.getName());
+            }
+        } catch (Exception ignore) { /* best effort */ }
 
         // Redirige al home del driver
         resp.sendRedirect(req.getContextPath() + "/driver/home.jsp");

@@ -23,7 +23,7 @@ public class DriverCreateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Muestra el formulario
-        req.getRequestDispatcher("/driver/create.jsp").forward(req, resp);
+        req.getRequestDispatcher("/auth/driverCreate.jsp").forward(req, resp);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class DriverCreateServlet extends HttpServlet {
 
         if (!errors.isEmpty()) {
             req.setAttribute("errors", errors);
-            req.getRequestDispatcher("/driver/create.jsp").forward(req, resp);
+            req.getRequestDispatcher("/auth/driverCreate.jsp").forward(req, resp);
             return;
         }
 
@@ -72,7 +72,7 @@ public class DriverCreateServlet extends HttpServlet {
             // p.ej., violación de UNIQUE (username/nationalId/phone/email)
             errors.add("Could not create driver. Check duplicates for username, national ID, phone, or email.");
             req.setAttribute("errors", errors);
-            req.getRequestDispatcher("/driver/create.jsp").forward(req, resp);
+            req.getRequestDispatcher("/auth/driverCreate.jsp").forward(req, resp);
             return;
         }
 

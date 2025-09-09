@@ -1,54 +1,66 @@
 body {
-            font-family: Arial, sans-serif;
-            background-color: #2fb634;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+    font-family: Arial, sans-serif;
+    background-color: #2fb634;
+    display: flex;
+    justify-content: center;
+    /* Place content at top by default to avoid scroll issues */
+    align-items: flex-start;
+    /* Allow page to grow beyond viewport and be scrollable */
+    min-height: 100vh;
+    height: auto;
+    margin: 0;
+    padding: 24px 12px;
+}
 
-        .form-container {
-            background-color: white;
-            padding: 2em;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            width: 400px;
-        }
+/* On tall viewports, center vertically for nicer look */
+@media (min-height: 700px) and (min-width: 768px) {
+    body { align-items: center; padding-top: 0; }
+}
 
-        .form-container h2 {
-            text-align: center;
-            margin-bottom: 1em;
-        }
+.form-container {
+    background-color: white;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 400px;
+    box-sizing: border-box;
+}
 
-        .form-group {
-            margin-bottom: 1em;
-        }
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 1em;
+}
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5em;
-            font-weight: bold;
-        }
+.form-group { margin-bottom: 1em; }
 
-        .form-group input {
-            width: 100%;
-            padding: 0.5em;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+.form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
 
-        .form-group button {
-            width: 100%;
-            padding: 0.75em;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 1em;
-            cursor: pointer;
-        }
+.form-group input {
+    width: 100%;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
 
-        .form-group button:hover {
-            background-color: #218838;
-        }
+.form-group button {
+    width: 100%;
+    padding: 0.75em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.form-group button:hover { background-color: #218838; }
+
+/* Small screens: let container fill width comfortably */
+@media (max-width: 420px) {
+    .form-container { width: 100%; padding: 1.25em; }
+}
