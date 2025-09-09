@@ -4,13 +4,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Driver Login</title>
+  <title>Admin Login</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth/driverLogin.css">
-</head>
+  <style>
+    h1 { margin-top: 24px; }
+  </style>
+  </head>
 <body>
-  <h1>Sign in</h1>
+  <h1>Administrators</h1>
 
-  <!-- Mensajes de error del servidor -->
   <c:if test="${not empty errors}">
     <div class="errors" role="alert" aria-live="polite">
       <ul>
@@ -22,42 +24,24 @@
   </c:if>
 
   <div class="login-container">
-    <form method="post"
-          action="${pageContext.request.contextPath}/drivers/login"
-          accept-charset="UTF-8"
-          autocomplete="on"
-          novalidate>
+    <form method="post" action="${pageContext.request.contextPath}/admins/login" accept-charset="UTF-8" autocomplete="on" novalidate>
       <div class="form-group">
         <label for="username">Username</label>
-        <input id="username"
-               name="username"
-               type="text"
-               required
-               maxlength="50"
-               autocomplete="username"
-               autofocus
-               value="${param.username}"/>
+        <input id="username" name="username" type="text" required maxlength="50" autocomplete="username" autofocus value="${param.username}"/>
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
         <div class="password-wrapper">
-          <input id="password"
-                 name="password"
-                 type="password"
-                 required
-                 maxlength="255"
-                 autocomplete="current-password"/>
-          <button type="button" class="toggle" aria-label="Show password" title="Show/Hide">
-            👁️
-          </button>
+          <input id="password" name="password" type="password" required maxlength="255" autocomplete="current-password"/>
+          <button type="button" class="toggle" aria-label="Show password" title="Show/Hide">👁️</button>
         </div>
       </div>
 
       <div class="form-actions">
         <button type="submit" class="btn primary">Sign in</button>
         <a class="btn link" href="${pageContext.request.contextPath}/index.jsp">← Back</a>
-        <a class="btn link" href="${pageContext.request.contextPath}/drivers/create" style="margin-left:8px;">Create account</a>
+        <a class="btn link" href="${pageContext.request.contextPath}/admins/create" style="margin-left:8px;">Crear nuevo admin</a>
       </div>
     </form>
   </div>
