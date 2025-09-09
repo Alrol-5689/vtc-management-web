@@ -3,7 +3,6 @@ package com.vtc.model.user;
 import java.util.List;
 
 import com.vtc.model.contract.Contract;
-import com.vtc.model.log.DailyLog;
 import com.vtc.validation.constraints.DniNie;
 import com.vtc.validation.constraints.UniqueUsername;
 
@@ -81,8 +80,7 @@ public class Driver {
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true) 
     private List<Contract> contracts;
 
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DailyLog> dailyLogs;
+    // Daily logs now relate to ContractAppendix, not directly to Driver
 
     /*@OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Payslip> payslips;*/
@@ -141,8 +139,8 @@ public class Driver {
     public List<Contract> getContracts() {return contracts;}
     public void setContracts(List<Contract> contracts) {this.contracts = contracts;}
 
-    public List<DailyLog> getDailyLogs() {return dailyLogs;}
-    public void setDailyLogs(List<DailyLog> dailyLogs) {this.dailyLogs = dailyLogs;}
+    // public List<DailyLog> getDailyLogs() {return dailyLogs;}
+    // public void setDailyLogs(List<DailyLog> dailyLogs) {this.dailyLogs = dailyLogs;}
 
     /*public List<Payslip> getPayslips() {return nominas;}
     public void setPayslips(List<Payslip> payslips) {this.payslips = payslips;}*/   
