@@ -2,7 +2,7 @@ package com.vtc.model.payslip;
 
 import java.time.YearMonth;
 
-import com.vtc.model.user.Driver;
+import com.vtc.model.contract.Contract;
 import com.vtc.util.YearMonthToStringConverter;
 
 import jakarta.persistence.Column;
@@ -20,7 +20,7 @@ import jakarta.persistence.UniqueConstraint;
 @Table(
     name = "payslip", 
     uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"id_driver", "month"}),
+        @UniqueConstraint(columnNames = {"contract_id", "month"}),
     }
 )
 public class Payslip {
@@ -33,8 +33,8 @@ public class Payslip {
     private Long id; 
 
     @ManyToOne
-    @JoinColumn(name = "id_driver", nullable = false)
-    private Driver driver;
+    @JoinColumn(name = "contract_id", nullable = false)
+    private Contract contract;
     
     @Convert(converter = YearMonthToStringConverter.class)
     @Column(name = "month", nullable = false)
@@ -71,7 +71,7 @@ public class Payslip {
     //===>> GETTERS <<===//
 
     public Long getId() {return id;}
-    public Driver getDriver() {return driver;}
+    public Contract getContract() {return contract;}
     public double getPlusPermanencia() { return plusPermanencia; }
     public double getPlusCalidad() { return plusCalidad; }
     public YearMonth getMonth() {return month;}
@@ -91,5 +91,5 @@ public class Payslip {
     public void setComision(double comision) {this.comision = comision;}
     public void setGratificaciones(double gratificaciones) {this.gratificaciones = gratificaciones;}
     public void setPlusCalidad(double plusCalidad) {this.plusCalidad = plusCalidad;}
-    public void setDriver(Driver conductor) {this.driver = conductor;}
+    public void setContract(Contract contract) {this.contract = contract;}
 }
