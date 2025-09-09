@@ -7,6 +7,7 @@ import java.util.List;
 import com.vtc.model.user.Driver;
 import com.vtc.service.DriverService;
 import com.vtc.validation.BeanValidation;
+import org.mindrot.jbcrypt.BCrypt;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -47,7 +48,9 @@ public class DriverCreateServlet extends HttpServlet {
 
         Driver driver = new Driver();
         driver.setUsername(username);
-        driver.setPassword(password); // TODO: hash (BCrypt) en producción
+        // Hash password with BCrypt (use a reasonable work factor)
+        String hashed = (password != null) ? BCrypt.hashpw(password, BCrypt.gensalt(12)) : null;
+        driver.setPassword(hashed);
         driver.setNationalId(nationalId);
         driver.setFirstName(firstName);
         driver.setLastName(lastName);
