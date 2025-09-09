@@ -3,7 +3,7 @@ package com.vtc.model.log;
 import java.time.Duration;
 import java.time.LocalDate;
 
-import com.vtc.model.user.Driver;
+import com.vtc.model.contract.ContractAppendix;
 import com.vtc.util.DurationToMinutesConverter;
 
 import jakarta.persistence.Column;
@@ -22,8 +22,8 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(
-    name = "daily_log", 
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "driver_id"})})
+    name = "daily_log",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "appendix_id"})})
 public class DailyLog {
 
     //===>> FIELDS <<===//
@@ -35,10 +35,10 @@ public class DailyLog {
 
     @ManyToOne(optional = false)
     @JoinColumn(
-        name = "driver_id", 
+        name = "appendix_id",
         nullable = false,
-        foreignKey= @ForeignKey(name="fk_daily_log_driver"))
-    private Driver driver;
+        foreignKey= @ForeignKey(name="fk_daily_log_appendix"))
+    private ContractAppendix appendix;
 
     @NotNull
     @Column(name = "date", nullable = false)
@@ -73,13 +73,15 @@ public class DailyLog {
     public Duration getPresence() { return presence; }
     public Duration getAuxiliaryTasks() { return auxiliaryTasks; }
     public double getBillingAmount() { return billingAmount; }
-    public Driver getDriver() { return driver; }
+    public ContractAppendix getAppendix() { return appendix; }
     public Duration getBalance() { return getWorkingHours(); }
 
+    public void setDate(LocalDate date) { this.date = date; }
     public void setConnection(Duration connection) { this.connection = connection; }
     public void setPresence(Duration presence) { this.presence = presence; }
     public void setAuxiliaryTasks(Duration auxiliaryTasks) { this.auxiliaryTasks = auxiliaryTasks; }
     public void setBillingAmount(double billingAmount) { this.billingAmount = billingAmount; }
+    public void setAppendix(ContractAppendix appendix) { this.appendix = appendix; }
     
     @Transient
     public Duration getWorkingHours() {
