@@ -3,6 +3,7 @@ package com.vtc.model.agreement;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.vtc.model.user.Administrator;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,6 +36,13 @@ public class CollectiveAgreement {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @jakarta.persistence.ManyToOne(optional = false)
+    @jakarta.persistence.JoinColumn(
+        name = "administrator_id",
+        nullable = false,
+        foreignKey = @jakarta.persistence.ForeignKey(name = "fk_agreement_admin"))
+    private Administrator createdBy;
+
     @OneToMany(mappedBy = "agreement", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AgreementAnnex> annexes; 
     
@@ -52,6 +60,7 @@ public class CollectiveAgreement {
     public LocalDate getEndDate() {return endDate;}
     public String getNotes() {return notes;}
     public String getName() {return name;}
+    public Administrator getCreatedBy() { return createdBy; }
     public List<AgreementAnnex> getAnnexes() {return annexes;}
     
     //===>> SETTERS <<===//
@@ -61,6 +70,7 @@ public class CollectiveAgreement {
     public void setEndDate(LocalDate fechaFin) {this.endDate = fechaFin;}
     public void setNotes(String notas) {this.notes = notas;}
     public void setName(String nombre) {this.name = nombre;}
+    public void setCreatedBy(Administrator createdBy) { this.createdBy = createdBy; }
     public void setAnnexes(List<AgreementAnnex> annexes) {this.annexes = annexes;}
 
 }
