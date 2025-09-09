@@ -95,6 +95,13 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- BCrypt for password hashing -->
+    <dependency>
+      <groupId>org.mindrot</groupId>
+      <artifactId>jbcrypt</artifactId>
+      <version>0.4</version>
+    </dependency>
+
     <!-- <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
