@@ -1,7 +1,9 @@
 package com.vtc.persistence.dao;
 
-import com.vtc.model.log.DailyLog;
+import java.time.LocalDate;
 import java.util.List;
+
+import com.vtc.model.log.DailyLog;
 
 public interface DailyLogDao {
 
@@ -16,5 +18,6 @@ public interface DailyLogDao {
     void createOrUpdate(DailyLog log);
 
     void delete(Long id);
-}
 
+    DailyLog findByAppendixAndDate(Long appendixId, LocalDate date);
+}
