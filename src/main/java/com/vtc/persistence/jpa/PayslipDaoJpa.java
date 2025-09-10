@@ -86,5 +86,16 @@ public class PayslipDaoJpa implements PayslipDao {
             throw e;
         } finally { em.close(); }
     }
-}
 
+    @Override
+    public List<Payslip> findByDriverAndCompany(Long driverId, Long companyId) {
+        try (EntityManager em = em()) {
+            return em.createQuery(
+                "SELECT p FROM Payslip p WHERE p.contract.driver.id = :did AND p.contract.company.id = :cid ORDER BY p.month DESC",
+                Payslip.class)
+                .setParameter("did", driverId)
+                .setParameter("cid", companyId)
+                .getResultList();
+        }
+    }
+}

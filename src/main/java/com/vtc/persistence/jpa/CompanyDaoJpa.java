@@ -2,29 +2,24 @@ package com.vtc.persistence.jpa;
 
 import java.util.List;
 
-import com.vtc.model.agreement.AgreementAnnex;
-import com.vtc.model.agreement.AgreementBonus;
+import com.vtc.model.company.Company;
 import com.vtc.persistence.JpaUtil;
-import com.vtc.persistence.dao.AgreementBonusDao;
+import com.vtc.persistence.dao.CompanyDao;
 
 import jakarta.persistence.EntityManager;
 
-public class AgreementBonusDaoJpa implements AgreementBonusDao {
+public class CompanyDaoJpa implements CompanyDao {
 
-    public AgreementBonusDaoJpa() {}
+    public CompanyDaoJpa() {}
 
     private EntityManager em() { return JpaUtil.getEntityManager(); }
 
     @Override
-    @SuppressWarnings("ConvertToTryWithResources")
-    public void create(AgreementBonus bonus) {
+    public void create(Company company) {
         EntityManager em = em();
         try {
             em.getTransaction().begin();
-            if (bonus.getAnnex() != null && bonus.getAnnex().getId() != null) {
-                bonus.setAnnex(em.getReference(AgreementAnnex.class, bonus.getAnnex().getId()));
-            }
-            em.persist(bonus);
+            em.persist(company);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();
@@ -33,27 +28,25 @@ public class AgreementBonusDaoJpa implements AgreementBonusDao {
     }
 
     @Override
-    public List<AgreementBonus> findAll() {
+    public List<Company> findAll() {
         try (EntityManager em = em()) {
-            return em.createQuery("SELECT b FROM AgreementBonus b", AgreementBonus.class)
-                     .getResultList();
+            return em.createQuery("SELECT c FROM Company c", Company.class).getResultList();
         }
     }
 
     @Override
-    public AgreementBonus findById(Long id) {
+    public Company findById(Long id) {
         try (EntityManager em = em()) {
-            return em.find(AgreementBonus.class, id);
+            return em.find(Company.class, id);
         }
     }
 
     @Override
-    @SuppressWarnings("ConvertToTryWithResources")
-    public void update(AgreementBonus bonus) {
+    public void update(Company company) {
         EntityManager em = em();
         try {
             em.getTransaction().begin();
-            em.merge(bonus);
+            em.merge(company);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();
@@ -62,16 +55,12 @@ public class AgreementBonusDaoJpa implements AgreementBonusDao {
     }
 
     @Override
-    @SuppressWarnings("ConvertToTryWithResources")
-    public void createOrUpdate(AgreementBonus bonus) {
+    public void createOrUpdate(Company company) {
         EntityManager em = em();
         try {
             em.getTransaction().begin();
-            if (bonus.getAnnex() != null && bonus.getAnnex().getId() != null) {
-                bonus.setAnnex(em.getReference(AgreementAnnex.class, bonus.getAnnex().getId()));
-            }
-            if (bonus.getId() == null) em.persist(bonus);
-            else em.merge(bonus);
+            if (company.getId() == null) em.persist(company);
+            else em.merge(company);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();
@@ -80,17 +69,28 @@ public class AgreementBonusDaoJpa implements AgreementBonusDao {
     }
 
     @Override
-    @SuppressWarnings("ConvertToTryWithResources")
     public void delete(Long id) {
         EntityManager em = em();
         try {
             em.getTransaction().begin();
-            AgreementBonus b = em.find(AgreementBonus.class, id);
-            if (b != null) em.remove(b);
+            Company c = em.find(Company.class, id);
+            if (c != null) em.remove(c);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();
             throw e;
         } finally { em.close(); }
     }
+
+    @Override
+    public List<Company> findByDriverId(Long driverId) {
+        try (EntityManager em = em()) {
+            return em.createQuery(
+                "SELECT DISTINCT c FROM Company c JOIN Contract ct ON ct.company = c WHERE ct.driver.id = :did",
+                Company.class)
+                .setParameter("did", driverId)
+                .getResultList();
+        }
+    }
 }
+

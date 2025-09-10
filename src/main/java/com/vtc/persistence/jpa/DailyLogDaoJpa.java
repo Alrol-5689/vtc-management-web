@@ -1,6 +1,7 @@
 package com.vtc.persistence.jpa;
 
 import java.util.List;
+import java.time.LocalDate;
 
 import com.vtc.model.log.DailyLog;
 import com.vtc.persistence.JpaUtil;
@@ -40,6 +41,19 @@ public class DailyLogDaoJpa implements DailyLogDao {
     public DailyLog findById(Long id) {
         try (EntityManager em = em()) {
             return em.find(DailyLog.class, id);
+        }
+    }
+
+    @Override
+    public DailyLog findByAppendixAndDate(Long appendixId, LocalDate date) {
+        try (EntityManager em = em()) {
+            List<DailyLog> result = em.createQuery(
+                "SELECT l FROM DailyLog l WHERE l.appendix.id = :aid AND l.date = :d", DailyLog.class)
+                .setParameter("aid", appendixId)
+                .setParameter("d", date)
+                .setMaxResults(1)
+                .getResultList();
+            return result.isEmpty() ? null : result.get(0);
         }
     }
 
@@ -87,4 +101,3 @@ public class DailyLogDaoJpa implements DailyLogDao {
         } finally { em.close(); }
     }
 }
-
