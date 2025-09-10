@@ -8,7 +8,6 @@ import com.vtc.model.agreement.AgreementAnnex;
 import com.vtc.model.agreement.AgreementBonus;
 import com.vtc.model.agreement.AgreementBonus.BonusType;
 import com.vtc.service.AgreementBonusService;
-import com.vtc.service.CollectiveAgreementService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,9 +18,9 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "AdminBonusCreateServlet", urlPatterns = {"/admin/bonus/create"})
 public class AdminBonusCreateServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
     private final AgreementBonusService bonusService = new AgreementBonusService();
-    private final CollectiveAgreementService agreementService = new CollectiveAgreementService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -50,16 +49,32 @@ public class AdminBonusCreateServlet extends HttpServlet {
         String[] paidMonths = req.getParameterValues("paidMonths");
 
         List<String> errors = new ArrayList<>();
-        Long annexId = null; 
-        try { annexId = Long.valueOf(annexIdStr); } catch (Exception ex) { errors.add("annexId inválido"); }
+        Long annexId = null;
+        try {
+            annexId = Long.valueOf(annexIdStr);
+        } catch (NumberFormatException | NullPointerException e) {
+            errors.add("annexId inválido");
+        }
         BonusType type = null;
-        try { type = BonusType.valueOf(typeStr); } catch (Exception ex) { errors.add("tipo inválido"); }
+        try {
+            type = BonusType.valueOf(typeStr);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            errors.add("tipo inválido");
+        }
         Double annualAmount = null;
-        try { annualAmount = Double.valueOf(amountStr); } catch (Exception ex) { errors.add("importe inválido"); }
+        try {
+            annualAmount = Double.valueOf(amountStr);
+        } catch (NumberFormatException | NullPointerException e) {
+            errors.add("importe inválido");
+        }
 
         int requiredMonths = 0;
         if (requiredMonthsStr != null && !requiredMonthsStr.isEmpty()) {
-            try { requiredMonths = Integer.parseInt(requiredMonthsStr); } catch (Exception ex) { errors.add("meses requeridos inválido"); }
+            try {
+                requiredMonths = Integer.parseInt(requiredMonthsStr);
+            } catch (NumberFormatException e) {
+                errors.add("meses requeridos inválido");
+            }
         }
 
         if (!errors.isEmpty()) {
@@ -68,11 +83,7 @@ public class AdminBonusCreateServlet extends HttpServlet {
             return;
         }
 
-        AgreementAnnex annex = null;
-        // Load annex by agreement service via current annex query scope
-        // We don't have an AnnexService; a simple way is to fetch agreement via detail page then use IDs in persistence layer.
-        // For now, use EntityManager via service only where necessary; we can attach by setting ID only.
-        annex = new AgreementAnnex();
+        AgreementAnnex annex = new AgreementAnnex();
         annex.setId(annexId);
 
         AgreementBonus b = new AgreementBonus();
@@ -94,7 +105,7 @@ public class AdminBonusCreateServlet extends HttpServlet {
 
         try {
             bonusService.createBonus(b);
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
             errors.add("No se pudo crear el bonus");
             req.setAttribute("errors", errors);
             req.getRequestDispatcher("/admin/bonus/create.jsp").forward(req, resp);
@@ -110,4 +121,3 @@ public class AdminBonusCreateServlet extends HttpServlet {
         }
     }
 }
-
