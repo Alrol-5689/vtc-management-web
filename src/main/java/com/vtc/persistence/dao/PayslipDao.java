@@ -16,5 +16,6 @@ public interface PayslipDao {
     void createOrUpdate(Payslip payslip);
 
     void delete(Long id);
-}
 
+    java.util.List<Payslip> findByDriverAndCompany(Long driverId, Long companyId);
+}
