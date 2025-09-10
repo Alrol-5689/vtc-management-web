@@ -7,6 +7,7 @@ import java.util.Set;
 import com.vtc.model.user.Driver;
 import com.vtc.persistence.dao.DriverDao;
 import com.vtc.persistence.jpa.DriverDaoJpa;
+import org.mindrot.jbcrypt.BCrypt;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -178,7 +179,19 @@ public class DriverService {
     }
 
     public Driver authenticate(String username, String password) {
-        // NOTE: For production, do not store plain passwords; use salted hashes.
-        return driverDao.findByUsernameAndPassword(username, password);
+        if (username == null || password == null) return null;
+        Driver d = driverDao.findByUsername(username);
+        if (d == null) return null;
+        String stored = d.getPassword();
+        if (stored == null) return null;
+        try {
+            // Prefer BCrypt when hash present; fallback to plain equals for legacy rows
+            boolean isBcrypt = stored.startsWith("$2a$") || stored.startsWith("$2b$") || stored.startsWith("$2y$");
+            boolean ok = isBcrypt ? BCrypt.checkpw(password, stored) : password.equals(stored);
+            return ok ? d : null;
+        } catch (IllegalArgumentException ex) {
+            // In case stored is not a valid BCrypt string
+            return null;
+        }
     }
 }

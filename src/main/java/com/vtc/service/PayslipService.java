@@ -21,5 +21,7 @@ public class PayslipService {
 
     public List<Payslip> listPayslips() { return payslipDao.findAll(); }
     public Payslip getPayslip(Long id) { return payslipDao.findById(id); }
+    public List<Payslip> findByDriverAndCompany(Long driverId, Long companyId) {
+        return payslipDao.findByDriverAndCompany(driverId, companyId);
+    }
 }
-
