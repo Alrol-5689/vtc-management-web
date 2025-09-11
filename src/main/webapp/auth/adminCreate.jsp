@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Crear administrador</title>
+  <title>Create administrator</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth/driverLogin.css">
   <style>
     .form { max-width: 420px; margin: 24px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,.08);}
@@ -12,7 +12,7 @@
   </style>
 </head>
 <body>
-  <h1><c:out value="${selfService ? 'Inicializar administrador' : 'Crear administrador'}"/></h1>
+  <h1><c:out value="${selfService ? 'Initialize administrator' : 'Create administrator'}"/></h1>
 
   <c:if test="${not empty errors}">
     <div class="errors" role="alert" aria-live="polite">
@@ -37,11 +37,10 @@
         <input id="confirm" name="confirm" type="password" required maxlength="255"/>
       </div>
       <div class="form-actions">
-        <button type="submit" class="btn primary">Crear</button>
+        <button type="submit" class="btn primary">Create</button>
         <a class="btn link" href="${pageContext.request.contextPath}/admins/login">← Back</a>
       </div>
     </form>
   </div>
 </body>
 </html>
-

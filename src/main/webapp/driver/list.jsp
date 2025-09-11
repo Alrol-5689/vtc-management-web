@@ -2,7 +2,7 @@
 <%-- <%@ taglib uri="https://jakarta.ee/jstl/core" prefix="c" %> --%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Drivers</title>
     <meta charset="UTF-8"/>

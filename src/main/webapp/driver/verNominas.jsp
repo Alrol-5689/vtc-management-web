@@ -25,9 +25,9 @@
         <th>Month</th>
         <th>Base Salary</th>
         <th>Commission</th>
-        <th>Plus Calidad</th>
-        <th>Plus Permanencia</th>
-        <th>Otros Pluses</th>
+        <th>Quality bonus</th>
+        <th>Longevity bonus</th>
+        <th>Other bonuses</th>
       </tr>
       <c:forEach var="p" items="${payslips}">
         <tr>
@@ -43,4 +43,3 @@
   </c:if>
 </body>
 </html>
-

@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Crear anejo</title>
+  <title>Create annex</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/driver/home.css">
   <style>.form { max-width: 720px; margin: 30px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,.1);} .form div{margin-bottom:12px;}</style>
 </head>
@@ -14,7 +14,7 @@
   </c:if>
 
   <div class="form">
-    <h2>Crear anejo</h2>
+    <h2>Create annex</h2>
 
     <c:if test="${not empty errors}">
       <div class="errors" style="color:#b00;">
@@ -26,35 +26,34 @@
 
     <form method="post" action="${pageContext.request.contextPath}/admin/annex/create">
       <div>
-        <label for="agreementId">ID Convenio</label><br/>
+        <label for="agreementId">Agreement ID</label><br/>
         <input id="agreementId" name="agreementId" type="number" min="1" value="${param.agreementId}" required/>
       </div>
       <div>
-        <label for="name">Nombre</label><br/>
+        <label for="name">Name</label><br/>
         <input id="name" name="name" type="text" required style="width:100%;"/>
       </div>
       <div>
-        <label for="start">Fecha inicio</label><br/>
+        <label for="start">Start date</label><br/>
         <input id="start" name="start" type="date" required/>
       </div>
       <div>
-        <label for="salary">Salario anual (€)</label><br/>
+        <label for="salary">Annual salary (€)</label><br/>
         <input id="salary" name="salary" type="number" step="0.01" min="0"/>
       </div>
       <div>
-        <label for="weeklyHours">Horas semanales (jornada completa)</label><br/>
-        <input id="weeklyHours" name="weeklyHours" type="number" min="0" placeholder="ej. 40"/>
+        <label for="weeklyHours">Weekly hours (full-time)</label><br/>
+        <input id="weeklyHours" name="weeklyHours" type="number" min="0" placeholder="e.g., 40"/>
       </div>
       <div>
-        <label for="auxMinutes">Minutos tareas auxiliares</label><br/>
-        <input id="auxMinutes" name="auxMinutes" type="number" min="0" placeholder="ej. 30"/>
+        <label for="auxMinutes">Auxiliary tasks minutes</label><br/>
+        <input id="auxMinutes" name="auxMinutes" type="number" min="0" placeholder="e.g., 30"/>
       </div>
       <div>
-        <button type="submit" class="btn" style="padding:8px 12px; background:#0a66c2; color:#fff; border-radius:6px; border:none;">Crear</button>
-        <a class="btn" href="${pageContext.request.contextPath}/admin/home" style="margin-left:8px;">Cancelar</a>
+        <button type="submit" class="btn" style="padding:8px 12px; background:#0a66c2; color:#fff; border-radius:6px; border:none;">Create</button>
+        <a class="btn" href="${pageContext.request.contextPath}/admin/home" style="margin-left:8px;">Cancel</a>
       </div>
     </form>
   </div>
 </body>
 </html>
-

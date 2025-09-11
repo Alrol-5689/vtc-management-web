@@ -41,7 +41,7 @@
       <div class="form-actions">
         <button type="submit" class="btn primary">Sign in</button>
         <a class="btn link" href="${pageContext.request.contextPath}/index.jsp">← Back</a>
-        <a class="btn link" href="${pageContext.request.contextPath}/admins/create" style="margin-left:8px;">Crear nuevo admin</a>
+        <a class="btn link" href="${pageContext.request.contextPath}/admins/create" style="margin-left:8px;">Create new admin</a>
       </div>
     </form>
   </div>

@@ -6,10 +6,10 @@
 </c:if>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Convenios</title>
+  <title>Agreements</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/driver/home.css">
 </head>
 <body>
@@ -18,18 +18,18 @@
     <h2>Admin</h2>
     <ul>
       <li><a href="${pageContext.request.contextPath}/admin/home">Dashboard</a></li>
-      <li><strong>Convenios</strong></li>
-      <li><a href="${pageContext.request.contextPath}/admin/agreements/create">Crear convenio</a></li>
+      <li><strong>Agreements</strong></li>
+      <li><a href="${pageContext.request.contextPath}/admin/agreements/create">Create agreement</a></li>
       <li><a href="${pageContext.request.contextPath}/admins/logout">Logout</a></li>
     </ul>
   </nav>
 
   <div class="main-content">
-    <header class="top-header"><h1>Convenios</h1></header>
+    <header class="top-header"><h1>Agreements</h1></header>
 
     <c:if test="${empty agreements}">
-      <p>No hay convenios aún.</p>
-      <p><a class="btn" href="${pageContext.request.contextPath}/admin/agreements/create">Crear convenio</a></p>
+      <p>No agreements yet.</p>
+      <p><a class="btn" href="${pageContext.request.contextPath}/admin/agreements/create">Create agreement</a></p>
     </c:if>
 
     <c:if test="${not empty agreements}">
@@ -39,8 +39,8 @@
             <a href="${pageContext.request.contextPath}/admin/agreements/view?id=${a.id}">
               <strong>${a.name}</strong>
             </a>
-            — desde ${a.startDate}
-            <c:if test="${not empty a.endDate}">hasta ${a.endDate}</c:if>
+            — since ${a.startDate}
+            <c:if test="${not empty a.endDate}">until ${a.endDate}</c:if>
           </li>
         </c:forEach>
       </ul>
@@ -49,4 +49,3 @@
 </div>
 </body>
 </html>
-
