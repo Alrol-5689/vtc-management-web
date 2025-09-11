@@ -34,6 +34,7 @@ public class CollectiveAgreementService {
      * Avoids MultipleBagFetchException by fetching annexes via JOIN FETCH
      * and then initializing bonuses per annex within the same EntityManager.
      */
+    @SuppressWarnings("ConvertToTryWithResources")
     public CollectiveAgreement getAgreementWithDetails(Long id) {
         if (id == null) return null;
         EntityManager em = JpaUtil.getEntityManager();
@@ -46,10 +47,11 @@ public class CollectiveAgreementService {
                 .setParameter("id", id)
                 .getResultStream().findFirst().orElse(null);
             if (c != null && c.getAnnexes() != null) {
-                // Initialize bonuses for each annex to avoid LazyInitialization outside EM
+                // Initialize collections for each annex to avoid LazyInitialization outside EM
                 for (AgreementAnnex a : c.getAnnexes()) {
-                    if (a != null && a.getBonuses() != null) {
-                        a.getBonuses().size();
+                    if (a != null) {
+                        if (a.getBonuses() != null) a.getBonuses().size();
+                        if (a.getSeniorityBreakpoints() != null) a.getSeniorityBreakpoints().size();
                     }
                 }
             }
@@ -58,6 +60,7 @@ public class CollectiveAgreementService {
     }
 
     /** Find agreement active today (startDate <= today <= endDate or endDate null). */
+    @SuppressWarnings("ConvertToTryWithResources")
     public CollectiveAgreement findCurrentAgreement() {
         EntityManager em = JpaUtil.getEntityManager();
         try {
@@ -74,6 +77,7 @@ public class CollectiveAgreementService {
     }
 
     /** Find annex active today for a given agreement. */
+    @SuppressWarnings("ConvertToTryWithResources")
     public AgreementAnnex findCurrentAnnex(Long agreementId) {
         if (agreementId == null) return null;
         EntityManager em = JpaUtil.getEntityManager();
@@ -93,6 +97,7 @@ public class CollectiveAgreementService {
 
     // ===== Orquestación con reglas de fechas + auditoría =====
 
+    @SuppressWarnings("ConvertToTryWithResources")
     public void createWithFirstAnnex(Administrator admin, CollectiveAgreement agreement, AgreementAnnex firstAnnex) {
         if (admin == null) throw new IllegalArgumentException("admin required");
         if (agreement == null || agreement.getStartDate() == null) throw new IllegalArgumentException("agreement with startDate required");
@@ -149,6 +154,7 @@ public class CollectiveAgreementService {
         } finally { em.close(); }
     }
 
+    @SuppressWarnings("ConvertToTryWithResources")
     public void addAnnex(Administrator admin, Long agreementId, AgreementAnnex next) {
         if (admin == null) throw new IllegalArgumentException("admin required");
         if (agreementId == null || next == null || next.getStartDate() == null) throw new IllegalArgumentException("agreementId and annex with startDate required");
@@ -193,6 +199,7 @@ public class CollectiveAgreementService {
         } finally { em.close(); }
     }
 
+    @SuppressWarnings("ConvertToTryWithResources")
     public void closeAgreement(Administrator admin, Long agreementId, LocalDate endDate) {
         if (admin == null) throw new IllegalArgumentException("admin required");
         if (agreementId == null || endDate == null) throw new IllegalArgumentException("agreementId and endDate required");
@@ -237,5 +244,37 @@ public class CollectiveAgreementService {
         ch.setType(type);
         ch.setMessage(message);
         em.persist(ch);
+    }
+
+    @SuppressWarnings("ConvertToTryWithResources")
+    public void updateAnnexSeniority(Administrator admin, Long annexId, java.util.Map<Integer, Double> breakpoints) {
+        if (admin == null) throw new IllegalArgumentException("admin required");
+        if (annexId == null) throw new IllegalArgumentException("annexId required");
+
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            AgreementAnnex annex = em.find(AgreementAnnex.class, annexId);
+            if (annex == null) throw new IllegalArgumentException("Annex not found");
+
+            // Normalize as TreeMap (ordered by months)
+            java.util.Map<Integer, Double> map = new java.util.TreeMap<>();
+            if (breakpoints != null) {
+                for (java.util.Map.Entry<Integer, Double> e : breakpoints.entrySet()) {
+                    if (e.getKey() != null && e.getKey() >= 0 && e.getValue() != null) {
+                        map.put(e.getKey(), e.getValue());
+                    }
+                }
+            }
+
+            annex.setSeniorityBreakpoints(map);
+            em.merge(annex);
+
+            logChange(em, admin, annex.getAgreement(), annex, "UPDATED_SENIORITY", "Updated seniority map entries=" + map.size());
+            em.getTransaction().commit();
+        } catch (RuntimeException ex) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw ex;
+        } finally { em.close(); }
     }
 }
