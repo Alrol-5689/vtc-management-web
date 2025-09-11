@@ -127,7 +127,9 @@
                               </c:otherwise>
                             </c:choose>
                             → <fmt:formatNumber value="${e.value}" minFractionDigits="0" maxFractionDigits="2"/>%
-                            → <fmt:formatNumber value="${x.annualSalary * (e.value / 100.0)}" type="currency"/>
+                            <c:set var="_inc" value="${x.annualSalary * (e.value / 100.0)}"/>
+                            <c:set var="_final" value="${x.annualSalary + _inc}"/>
+                            → <fmt:formatNumber value="${_final}" type="currency"/> ( +<fmt:formatNumber value="${_inc}" type="currency"/> )
                           </li>
                         </c:forEach>
                     </ul>
