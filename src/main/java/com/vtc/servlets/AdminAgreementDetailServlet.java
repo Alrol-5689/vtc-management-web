@@ -2,6 +2,8 @@ package com.vtc.servlets;
 
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.List;
 
 import com.vtc.model.agreement.AgreementAnnex;
@@ -44,7 +46,16 @@ public class AdminAgreementDetailServlet extends HttpServlet {
 
         AgreementAnnex currentAnnex = agreementService.findCurrentAnnex(id);
         List<AgreementAnnex> annexes = agreement.getAnnexes();
-        if (annexes != null) annexes.sort(Comparator.comparing(AgreementAnnex::getStartDate));
+        if (annexes != null) {
+            annexes.sort(Comparator.comparing(AgreementAnnex::getStartDate));
+            // Ensure seniority map is ordered ascending for display
+            for (AgreementAnnex a : annexes) {
+                Map<Integer, Double> m = a.getSeniorityBreakpoints();
+                if (m != null && !(m instanceof TreeMap)) {
+                    a.setSeniorityBreakpoints(new TreeMap<>(m));
+                }
+            }
+        }
 
         req.setAttribute("agreement", agreement);
         req.setAttribute("currentAnnex", currentAnnex);
