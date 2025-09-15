@@ -3,7 +3,7 @@ package com.vtc.bootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.vtc.persistence.JpaUtil;
+import com.vtc.persistence.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

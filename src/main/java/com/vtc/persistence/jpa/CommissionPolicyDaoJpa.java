@@ -3,8 +3,8 @@ package com.vtc.persistence.jpa;
 import java.util.List;
 
 import com.vtc.model.contract.CommissionPolicy;
-import com.vtc.persistence.JpaUtil;
 import com.vtc.persistence.dao.CommissionPolicyDao;
+import com.vtc.persistence.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
 

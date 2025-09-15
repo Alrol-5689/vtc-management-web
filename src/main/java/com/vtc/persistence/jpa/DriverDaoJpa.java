@@ -3,8 +3,8 @@ package com.vtc.persistence.jpa;
 import java.util.List;
 
 import com.vtc.model.user.Driver;
-import com.vtc.persistence.JpaUtil;
 import com.vtc.persistence.dao.DriverDao;
+import com.vtc.persistence.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
 

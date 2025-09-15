@@ -1,4 +1,4 @@
-package com.vtc.persistence;
+package com.vtc.persistence.util;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

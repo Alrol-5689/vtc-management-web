@@ -3,8 +3,8 @@ package com.vtc.persistence.jpa;
 import java.util.List;
 
 import com.vtc.model.contract.ContractAppendix;
-import com.vtc.persistence.JpaUtil;
 import com.vtc.persistence.dao.ContractAppendixDao;
+import com.vtc.persistence.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
 

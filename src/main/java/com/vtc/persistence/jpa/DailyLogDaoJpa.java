@@ -1,11 +1,11 @@
 package com.vtc.persistence.jpa;
 
-import java.util.List;
 import java.time.LocalDate;
+import java.util.List;
 
 import com.vtc.model.log.DailyLog;
-import com.vtc.persistence.JpaUtil;
 import com.vtc.persistence.dao.DailyLogDao;
+import com.vtc.persistence.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
 

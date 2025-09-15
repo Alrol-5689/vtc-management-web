@@ -2,7 +2,7 @@ package com.vtc.servlets;
 
 import java.io.IOException;
 
-import com.vtc.persistence.JpaUtil;
+import com.vtc.persistence.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.annotation.WebServlet;

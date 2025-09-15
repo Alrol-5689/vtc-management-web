@@ -7,9 +7,9 @@ import com.vtc.model.agreement.AgreementAnnex;
 import com.vtc.model.agreement.AgreementChange;
 import com.vtc.model.agreement.CollectiveAgreement;
 import com.vtc.model.user.Administrator;
-import com.vtc.persistence.JpaUtil;
 import com.vtc.persistence.dao.CollectiveAgreementDao;
 import com.vtc.persistence.jpa.CollectiveAgreementDaoJpa;
+import com.vtc.persistence.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
 

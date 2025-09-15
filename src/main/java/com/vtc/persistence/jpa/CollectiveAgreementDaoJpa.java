@@ -3,8 +3,8 @@ package com.vtc.persistence.jpa;
 import java.util.List;
 
 import com.vtc.model.agreement.CollectiveAgreement;
-import com.vtc.persistence.JpaUtil;
 import com.vtc.persistence.dao.CollectiveAgreementDao;
+import com.vtc.persistence.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
 

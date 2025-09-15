@@ -1,7 +1,8 @@
 package com.vtc.validation.constraints;
 
 import com.vtc.model.user.Driver;
-import com.vtc.persistence.JpaUtil;
+import com.vtc.persistence.util.JpaUtil;
+
 import jakarta.persistence.EntityManager;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
