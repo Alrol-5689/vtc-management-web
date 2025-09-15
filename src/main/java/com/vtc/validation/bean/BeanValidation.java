@@ -1,4 +1,4 @@
-package com.vtc.validation;
+package com.vtc.validation.bean;
 
 import java.util.List;
 import java.util.Set;

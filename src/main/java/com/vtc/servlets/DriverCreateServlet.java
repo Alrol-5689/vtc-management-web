@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.vtc.model.user.Driver;
 import com.vtc.service.DriverService;
-import com.vtc.validation.BeanValidation;
-import org.mindrot.jbcrypt.BCrypt;
+import com.vtc.validation.bean.BeanValidation;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

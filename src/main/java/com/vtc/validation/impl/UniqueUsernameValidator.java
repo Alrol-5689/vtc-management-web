@@ -1,7 +1,8 @@
-package com.vtc.validation.constraints;
+package com.vtc.validation.impl;
 
 import com.vtc.model.user.Driver;
 import com.vtc.persistence.util.JpaUtil;
+import com.vtc.validation.constraints.UniqueUsername;
 
 import jakarta.persistence.EntityManager;
 import jakarta.validation.ConstraintValidator;
