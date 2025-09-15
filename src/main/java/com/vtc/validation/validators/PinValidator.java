@@ -1,4 +1,4 @@
-package com.vtc.validation.impl;
+package com.vtc.validation.validators;
 
 import com.vtc.validation.constraints.Pin;
 

@@ -9,7 +9,7 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 
-import com.vtc.validation.impl.DniNieValidator;
+import com.vtc.validation.validators.DniNieValidator;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
