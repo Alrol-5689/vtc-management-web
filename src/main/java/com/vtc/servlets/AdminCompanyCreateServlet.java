@@ -63,7 +63,7 @@ public class AdminCompanyCreateServlet extends HttpServlet {
         try {
             companyService.createCompany(c);
             resp.sendRedirect(req.getContextPath() + "/admin/home");
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             errors.add("Could not create company");
             req.setAttribute("errors", errors);
             req.getRequestDispatcher("/admin/companies/create.jsp").forward(req, resp);
