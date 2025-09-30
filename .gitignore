@@ -6,6 +6,14 @@
 
 # VS Code
 .vscode/
+out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Librerías externas
+lib/*.jar
 
 # Archivos compilados
 *.class

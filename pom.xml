@@ -7,6 +7,14 @@
 
   <modelVersion>4.0.0</modelVersion>
 
+  <!-- SI USARÁIS UN POM PADRE, DESCOMENTAR Y RELLENAR. POR EJEMPLO, SI USO FRAMEWORK, USARÉ EL POM PADRE DE FRAMEWORK. EJEMPLO: SPRING BOOT, SPRING, ETC. -->
+  <!-- <parent> 
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-started-parent</artifactId>
+    <version>3.3.0</version>
+    <relativePath/>
+  </parent> -->
+
   <groupId>com.vtc</groupId>
   <artifactId>vtcweb</artifactId>
   <version>0.1.0</version>
@@ -19,7 +27,7 @@
   <properties>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.release>17</maven.compiler.release>
+    <maven.compiler.release>21</maven.compiler.release>
     <!-- versions -->
     <jakarta.servlet.version>6.0.0</jakarta.servlet.version>
     <jakarta.persistence.version>3.1.0</jakarta.persistence.version>
@@ -80,12 +88,12 @@
       <version>8.0.1.Final</version>
     </dependency>
 
-<!-- EL implementation requerida por Hibernate Validator en aplicaciones web -->
-<dependency>
-  <groupId>org.glassfish</groupId>
-  <artifactId>jakarta.el</artifactId>
-  <version>4.0.2</version>
-</dependency>
+    <!-- EL implementation requerida por Hibernate Validator en aplicaciones web -->
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>jakarta.el</artifactId>
+      <version>4.0.2</version>
+    </dependency>
 
     <!-- Logger simple en runtime (opcional) -->
     <dependency>
@@ -102,26 +110,19 @@
       <version>0.4</version>
     </dependency>
 
-    <!-- <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
+    <!-- JUnit Jupiter API and Engine for testing -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.2</version>
       <scope>test</scope>
-    </dependency> -->
+    </dependency>
 
   </dependencies> 
 
   <build>
-    <finalName>vtcweb</finalName>
-    <!-- <pluginManagement>lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <finalName>vtcweb</finalName> <!-- NOMBRE DEL WAR -->
       <plugins>
-
-        <!-- <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin> -->
-
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
 
         <!-- Compilación con release 17 -->
         <plugin>
@@ -129,7 +130,10 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.11.0</version>
           <configuration>
-            <release>17</release>
+            <release>21</release>
+            <jdkToolchain>
+              <version>21</version>
+            </jdkToolchain>
           </configuration>
         </plugin>
 
@@ -143,37 +147,48 @@
           </configuration>
         </plugin>
 
-        <!-- <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-
+        <!-- Reglas de compilación -->
         <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>3.5.0</version>
+          <executions>
+            <execution>
+              <goals><goal>enforce</goal></goals>
+              <configuration>
+                <rules>
+                  <requireJavaVersion>
+                    <version>[17,22)</version>
+                  </requireJavaVersion>
+                  <requireMavenVersion>
+                    <version>[3.9,)</version>
+                  </requireMavenVersion>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
 
+        <!-- Análisis de dependencias -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.6.1</version>
+          <executions>
+            <execution>
+              <id>analyze</id>
+              <goals><goal>analyze</goal></goals>
+              <phase>verify</phase>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- JUnit -->
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
+          <version>3.2.5</version>
         </plugin>
-
-        <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.2</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin> -->
 
       </plugins>
-    <!-- </pluginManagement> -->
   </build>
 </project>
