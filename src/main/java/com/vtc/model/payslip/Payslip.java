@@ -19,10 +19,7 @@ import jakarta.persistence.UniqueConstraint;
 @Entity
 @Table(
     name = "payslip", 
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"contract_id", "month"}),
-    }
-)
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"contract_id", "month"}),})
 public class Payslip {
 
     //===>> ATRIBUTOS <<===//
