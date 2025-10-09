@@ -6,7 +6,9 @@ import java.util.Map;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-
+// ACTUALEMTNE NO SE USA, PERO PUEDE SER UTIL PARA FUTUROS
+// Convierte un Map<DayOfWeek, Duration> a String y viceversa para almacenar en BD
+// Formato: L{8:30}M{8:30}X{8:30}J{8:30}V{8:30}S{0:0}D{0:0} (L=Monday, M=Tuesday, X=Wednesday, J=Thursday, V=Friday, S=Saturday, D=Sunday)
 @Converter(autoApply = false)
 public class JornadaConverter implements AttributeConverter<Map<DayOfWeek, Duration>, String> {
 
